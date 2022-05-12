@@ -99,7 +99,8 @@ def draw_plotly_network(net, ndim = 2, communities = None, kamada = True):  # Ma
 def plot_features(df, node):
     #define the plot
     plt.figure(figsize=(20,10))
-    ax = sns.barplot(x="feature",y="sum_values", data=df)
+    df = df.sort_values("sum_values",ascending=False)
+    ax = sns.barplot(x="feature",y="sum_values", data=df, ci=None)
     #attach the value of each bar
     ax.bar_label(ax.containers[0])
     #rotate the label on X axis in order to allow to read each value
@@ -158,6 +159,7 @@ def independent_cascade(G,t,infection_times):
 def plot_G(G,pos,infection_times,t,label):
     current_infectious = [n for n in infection_times if infection_times[n]==t]
     plt.figure()
+    plt.axis('off')
     plt.title('Spread of information in community, t={}'.format(t),fontsize = 24)
     plt.figure(figsize=(20,10))
     weighted_degrees = dict(nx.degree(G,weight='weight'))
